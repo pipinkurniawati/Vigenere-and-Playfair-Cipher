@@ -49,19 +49,4 @@ public class StandardVigenere {
         }
         return result.toLowerCase();
     }
-    
-    public String clearSpace(String cipher) {
-        return cipher.replaceAll("\\s+","");
-    }
-    
-    public String divideIntoFive(String cipher) {
-        cipher = clearSpace(cipher);
-        for (int i=0, j=0; i<cipher.length(); i++) {
-            if (i == j+((j+1)*5)) {
-                cipher = new StringBuffer(cipher).insert(i, " ").toString();
-                j++;
-            }
-        }
-        return cipher;
-    }
 }
