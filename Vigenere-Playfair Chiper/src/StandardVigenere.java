@@ -8,11 +8,11 @@
  *
  * @author Pipin
  */
-public class VigenereCipher {
+public class StandardVigenere {
     private static final int MAX_KEY_LENGTH = 25;
     private String key, text;
     
-    public VigenereCipher(String text, String key) {
+    public StandardVigenere(String text, String key) {
         this.text = new String(text);
         this.key = new String (key.toUpperCase());
     }
