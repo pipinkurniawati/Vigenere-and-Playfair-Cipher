@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +53,7 @@ public class MainClass {
     
     public static void saveResult(String output) throws IOException {
         byte data[] = output.getBytes();
-        File someFile = new File("C:\\out2.txt");
+        File someFile = new File("C:\\out2.docx");
         try {
             FileOutputStream fos = new FileOutputStream(someFile);
             fos.write(data);
@@ -60,5 +62,17 @@ public class MainClass {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void main(String[] args) {
+        String text = new String ("JALAN GANESHA SEPULUH");
+        Scanner in = new Scanner(System.in);
+        Vector<String> key = new Vector<String>();
+        for (int i=0; i<5; i++) {
+            key.add(in.nextLine());
+        }
+        
+        PlayfairCipher cp = new PlayfairCipher(text, key);
+        System.out.println(cp.encrypt());
     }
 }
