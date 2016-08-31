@@ -88,6 +88,43 @@ public class PlayfairCipher {
     public String decrypt() {
         String plaintext = new String();
         
+        text = clearSymbols(text);
+        System.out.println(text);
+        for (int i=0; i<text.length()-1; i+=2) {
+            
+            int col1=0, row1=0, col2=0, row2=0;
+            for (int j=0; j<key.length; j++) {
+                for (int k=0; k<key[j].length; k++) {
+                    if (key[j][k] == text.charAt(i)) {
+                        row1=j; col1 = k;
+                    }
+                    if (key[j][k] == text.charAt(i+1)) {
+                        row2=j; col2 = k;
+                    }
+                }
+            }
+            
+            if (row1==row2) {
+                if (col1==0) {
+                    col1=5;
+                } else if (col2==0) {
+                    col2=5;
+                }
+                plaintext += key[row1][col1-1];
+                plaintext += key[row1][col2-1];
+            } else if (col1==col2) {
+                if (row1==0) {
+                    row1=4;
+                } else if (row2==0) {
+                    row2=4;
+                }
+                plaintext += key[row1-1][col1];
+                plaintext += key[row2-1][col1];
+            } else {
+                plaintext += key[row1][col2];
+                plaintext += key[row2][col1];
+            }
+        }
         return plaintext;
     }
 }

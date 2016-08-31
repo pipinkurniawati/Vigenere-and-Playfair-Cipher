@@ -27,10 +27,10 @@ public class MainClass {
         return cipher.replaceAll("\\s+","");
     }
     
-    public String divideIntoFive(String cipher) {
+    public String divideIntoN(String cipher, int n) {
         cipher = clearSpace(cipher);
         for (int i=0, j=0; i<cipher.length(); i++) {
-            if (i == j+((j+1)*5)) {
+            if (i == j+((j+1)*n)) {
                 cipher = new StringBuffer(cipher).insert(i, " ").toString();
                 j++;
             }
@@ -65,7 +65,7 @@ public class MainClass {
     }
     
     public static void main(String[] args) {
-        String text = new String ("JALAN GANESHA SEPULUH");
+        String text = new String ("GNGDAINDKECNEKQMUZBY");
         Scanner in = new Scanner(System.in);
         Vector<String> key = new Vector<String>();
         for (int i=0; i<5; i++) {
@@ -73,6 +73,6 @@ public class MainClass {
         }
         
         PlayfairCipher cp = new PlayfairCipher(text, key);
-        System.out.println(cp.encrypt());
+        System.out.println(cp.decrypt());
     }
 }
