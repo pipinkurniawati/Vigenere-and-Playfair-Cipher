@@ -1,22 +1,20 @@
-
-import java.util.Vector;
-
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author Pipin
+ * @file PlayfairCipher.java
  */
+import java.util.Vector;
+
 public class PlayfairCipher {
+    private static final int MAX_KEY_LENGTH = 25;
     private char[][] key;
     private String text;
     
+    /**
+     * 
+     * @param text
+     * @param keyInput 
+     * ctor
+     */
     public PlayfairCipher(String text, Vector<String> keyInput) {
         this.text = new String(text.toUpperCase());
         this.key = new char[5][5];
@@ -30,6 +28,12 @@ public class PlayfairCipher {
         }
     }
     
+    /**
+     * 
+     * @param text
+     * @return string
+     * return string alphabet only
+     */
     public String clearSymbols(String text) {
         String result = new String();
         for (int i=0; i<text.length(); i++) {
@@ -41,13 +45,17 @@ public class PlayfairCipher {
         } 
         return result;
     }
-    
+    /**
+     * 
+     * @return string
+     * encryption function
+     */
     public String encrypt() {
         String ciphertext = new String();
-        
         text = clearSymbols(text);
         text = text.replaceAll("J","I");
-        System.out.println(text);
+        
+        //replace second character with Z
         for (int i=0; i<text.length()-1; i+=2) {
           if (text.charAt(i)==text.charAt(i+1)) {
               text = new StringBuffer(text).insert(i+1, "Z").toString();
@@ -57,8 +65,7 @@ public class PlayfairCipher {
             text = new StringBuffer(text).insert(text.length(), "Z").toString();
         }
         
-        for (int i=0; i<text.length()-1; i+=2) {
-            
+        for (int i=0; i<text.length()-1; i+=2) {  
             int col1=0, row1=0, col2=0, row2=0;
             for (int j=0; j<key.length; j++) {
                 for (int k=0; k<key[j].length; k++) {
@@ -71,6 +78,7 @@ public class PlayfairCipher {
                 }
             }
             
+            //substitution
             if (row1==row2) {
                 ciphertext += key[row1][(col1+1)%5];
                 ciphertext += key[row1][(col2+1)%5];
@@ -85,13 +93,12 @@ public class PlayfairCipher {
         return ciphertext;
     }
     
+    //decryption function
     public String decrypt() {
         String plaintext = new String();
-        
         text = clearSymbols(text);
-        System.out.println(text);
-        for (int i=0; i<text.length()-1; i+=2) {
-            
+        
+        for (int i=0; i<text.length()-1; i+=2) {    
             int col1=0, row1=0, col2=0, row2=0;
             for (int j=0; j<key.length; j++) {
                 for (int k=0; k<key[j].length; k++) {
