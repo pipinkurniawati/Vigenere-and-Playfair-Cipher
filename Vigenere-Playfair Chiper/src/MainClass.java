@@ -154,7 +154,7 @@ public class MainClass {
                         System.out.println("Your Plaintext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
                         break;
                 }
-
+                break;
             case 2:
                 ExtendedVigenere ext;
                 printTypeOption();
@@ -236,7 +236,7 @@ public class MainClass {
                                 System.out.print("Type the file path you want to encrypt: ");
                                 text = readBytes(in.nextLine());
                                 System.out.println("Type the 25 unique characters without J:");
-                                for (int i=1; i<5; i++) keys.add(in.nextLine());
+                                for (int i=0; i<5; i++) keys.add(in.nextLine());
                                 break;
                         }
                         play = new PlayfairCipher(text, keys);
@@ -261,7 +261,7 @@ public class MainClass {
                                 System.out.print("Type the file path you want to decrypt: ");
                                 text = readBytes(in.nextLine());
                                 System.out.println("Type the 25 unique characters without J:");
-                                for (int i=1; i<5; i++) keys.add(in.nextLine());
+                                for (int i=0; i<5; i++) keys.add(in.nextLine());
                                 break;
                         }
                         play = new PlayfairCipher(text, keys);
