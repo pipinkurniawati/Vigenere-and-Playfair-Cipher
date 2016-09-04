@@ -27,17 +27,20 @@ public class ModifiedVigenere {
     public String encrypt() {
         String result = new String();
         String plaintext = new String(text);
-        int offset = 0, period = 0, j = 0, move = 0;
+        int offset = 0, period = 0, j = 0, first = 0;
         for (int i=0; i<plaintext.length(); i++) {
             char c = plaintext.charAt(i);
-            result += (char) (((int)c + (int)key.charAt(j) + move) % MOD);
+            result += (char) (((int)c + (int)key.charAt(j)) % MOD);
             j += period + 1;
             if (j >= key.length()) {
-                offset++;
-                if (offset > period) {
-                    period = (period + 1) % key.length();
-                    offset = 0;
-                    move = (move + 1) % MOD;
+                offset = (offset + 1) % (period + 1);
+                if (offset == first) {
+                    first++;
+                    if (first > period) {
+                        period = (period + 1) % key.length();
+                        first = 0;
+                    }
+                    offset = first;
                 }
                 j = offset;
             }
@@ -53,17 +56,20 @@ public class ModifiedVigenere {
     public String decrypt() {
         String result = new String();
         String ciphertext = new String(text);
-        int offset = 0, period = 0, j = 0, move = 0;
+        int offset = 0, period = 0, j = 0, first = 0;
         for (int i=0; i<ciphertext.length(); i++) {
             char c = ciphertext.charAt(i);
-            result += (char) (((int)c - (int)key.charAt(j) + MOD + move) % MOD);
+            result += (char) (((int)c - (int)key.charAt(j) + MOD) % MOD);
             j += period + 1;
             if (j >= key.length()) {
-                offset++;
-                if (offset > period) {
-                    period = (period + 1) % key.length();
-                    offset = 0;
-                    move = (move + MOD - 1) % MOD;
+                offset = (offset + 1) % (period + 1);
+                if (offset == first) {
+                    first++;
+                    if (first > period) {
+                        period = (period + 1) % key.length();
+                        first = 0;
+                    }
+                    offset = first;
                 }
                 j = offset;
             }
