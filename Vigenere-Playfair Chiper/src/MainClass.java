@@ -40,7 +40,7 @@ public class MainClass {
     
     public String readBytes(String filePath)
     {
-    	Path path = Paths.get(filePath);
+        Path path = Paths.get(filePath);
         String text = new String();
         try {
             byte[] bytes = Files.readAllBytes(path);
@@ -66,11 +66,11 @@ public class MainClass {
     
     public void printAlgoOption() {
         System.out.println("=======================================");
-	System.out.println("                WELCOME                ");
-	System.out.println("=======================================");
+        System.out.println("                WELCOME                ");
+        System.out.println("=======================================");
         System.out.println("********** CHOOSE ALGORITHM ***********");
-	System.out.println("1. Standard Vigenere Cipher");
-	System.out.println("2. Extended Vigenere Cipher");
+        System.out.println("1. Standard Vigenere Cipher");
+        System.out.println("2. Extended Vigenere Cipher");
         System.out.println("3. Modified Vigenere Cipher");
         System.out.println("4. Playfair Cipher");
         System.out.print("Your Input: ");
@@ -91,189 +91,99 @@ public class MainClass {
     }
     
     public void printOption() throws IOException {
-	int algo = -1, type = -1, input = -1;
-	String text = "", key = "", result = "";
-	String path;
-    Scanner in = new Scanner(System.in);
-    printAlgoOption();
-    algo = Integer.parseInt(in.nextLine());
-	switch(algo) {
-            case 1:
-                StandardVigenere std;
-                printTypeOption();
-                type = Integer.parseInt(in.nextLine());
-                switch(type) {
-                    case 1:
-                        printInputOption();
-                        input = Integer.parseInt(in.nextLine());
-                        switch(input) {
-                            case 1:
-                                System.out.print("Type the plaintext you want to encrypt: ");
-                                text = in.nextLine();
-                                System.out.print("Type the encryption key: ");
-                                key = in.nextLine();
-                                break;
-                            case 2:
-                                System.out.print("Type the file path you want to encrypt: ");
-                                text = readBytes(in.nextLine());
-                                System.out.print("Type the encryption key: ");
-                                key = in.nextLine();
-                                break;
-                        }
-                        std = new StandardVigenere(text, key);
-                        result = std.encrypt();
-                        System.out.println("\n==================== RESULT ====================");
-                        System.out.println("Your Plaintext                                  : " + text);
-                        System.out.println("Your Ciphertext in Original format              : " + result);
-                        System.out.println("Your Ciphertext without Whitespace              : " + clearSpace(result));
-                        System.out.println("Your Ciphertext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
-                        break;
-                    case 2:
-                        printInputOption();
-                        input = Integer.parseInt(in.nextLine());
-                        switch(input) {
-                            case 1:
-                                System.out.print("Type the plaintext you want to decrypt: ");
-                                text = in.nextLine();
-                                System.out.print("Type the decryption key: ");
-                                key = in.nextLine();
-                                break;
-                            case 2:
-                                System.out.print("Type the file path you want to decrypt: ");
-                                text = readBytes(in.nextLine());
-                                System.out.print("Type the decryption key: ");
-                                key = in.nextLine();
-                                break;
-                        }
-                        std = new StandardVigenere(text, key);
-                        result = std.decrypt();
-                        System.out.println("\n==================== RESULT ====================");
-                        System.out.println("Your Chipertext                                : " + text);
-                        System.out.println("Your Plaintext in Original format              : " + result);
-                        System.out.println("Your Plaintext without Whitespace              : " + clearSpace(result));
-                        System.out.println("Your Plaintext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
-                        break;
+        int algo = -1, type = -1, input = -1;
+        String text = "", key = "", result = "";
+        String path;
+        Scanner in = new Scanner(System.in);
+        printAlgoOption();
+        algo = Integer.parseInt(in.nextLine());
+        printTypeOption();
+        type = Integer.parseInt(in.nextLine());
+        printInputOption();
+        input = Integer.parseInt(in.nextLine());
+        if (type == 1) {
+            switch(input) {
+                case 1:
+                    System.out.print("Type the plaintext you want to encrypt: ");
+                    text = in.nextLine();
+                    System.out.print("Type the encryption key: ");
+                    key = in.nextLine();
+                    break;
+                case 2: 
+                    System.out.print("Type the file path you want to encrypt: ");
+                    text = readBytes(in.nextLine());
+                    System.out.print("Type the encryption key: ");
+                    key = in.nextLine();
+                    break;
+            }
+        }
+        else {
+            switch(input) {
+                case 1:
+                    System.out.print("Type the plaintext you want to decrypt: ");
+                    text = in.nextLine();
+                    System.out.print("Type the decryption key: ");
+                    key = in.nextLine();
+                    break;
+                case 2:
+                    System.out.print("Type the file path you want to decrypt: ");
+                    text = readBytes(in.nextLine());
+                    System.out.print("Type the decryption key: ");
+                    key = in.nextLine();
+                    break;
+            }
+        }
+        switch (algo) {
+            case 1 : // Standard Vigenere Cipher
+                StandardVigenere stdVigenere = new StandardVigenere(text, key);
+                if (type == 1) {
+                    result = stdVigenere.encrypt();
                 }
-
-            case 2:
-                ExtendedVigenere ext;
-                printTypeOption();
-                type = Integer.parseInt(in.nextLine());
-                switch(type) {
-                    case 1:
-                        printInputOption();
-                        input = Integer.parseInt(in.nextLine());
-                        switch(input) {
-                            case 1:
-                                System.out.print("Type the plaintext you want to encrypt: ");
-                                text = in.nextLine();
-                                System.out.print("Type the encryption key: ");
-                                key = in.nextLine();
-                                break;
-                            case 2:
-                                System.out.print("Type the file path you want to encrypt: ");
-                                text = readBytes(in.nextLine());
-                                System.out.print("Type the encryption key: ");
-                                key = in.nextLine();
-                                break;
-                        }
-                        ext = new ExtendedVigenere(text, key);
-                        result = ext.encrypt();
-                        System.out.println("\n==================== RESULT ====================");
-                        System.out.println("Your Plaintext                                  : " + text);
-                        System.out.println("Your Ciphertext in Original format              : " + result);
-                        System.out.println("Your Ciphertext without Whitespace              : " + clearSpace(result));
-                        System.out.println("Your Ciphertext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
-                        break;
-                    case 2:
-                        printInputOption();
-                        input = Integer.parseInt(in.nextLine());
-                        switch(input) {
-                            case 1:
-                                System.out.print("Type the plaintext you want to decrypt: ");
-                                text = in.nextLine();
-                                System.out.print("Type the decryption key: ");
-                                key = in.nextLine();
-                                break;
-                            case 2:
-                                System.out.print("Type the file path you want to decrypt: ");
-                                text = readBytes(in.nextLine());
-                                System.out.print("Type the decryption key: ");
-                                key = in.nextLine();
-                                break;
-                        }
-                        ext = new ExtendedVigenere(text, key);
-                        result = ext.decrypt();
-                        System.out.println("\n==================== RESULT ====================");
-                        System.out.println("Your Chipertext                                : " + text);
-                        System.out.println("Your Plaintext in Original format              : " + result);
-                        System.out.println("Your Plaintext without Whitespace              : " + clearSpace(result));
-                        System.out.println("Your Plaintext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
-                        break;
+                else {
+                    result = stdVigenere.decrypt();
                 }
-                break;	
-
-            case 3:
-
-
-            case 4:
-                PlayfairCipher play;
-                Vector<String> keys = new Vector<String>();
-                printTypeOption();
-                type = Integer.parseInt(in.nextLine());
-                switch(type) {
-                    case 1:
-                        printInputOption();
-                        input = Integer.parseInt(in.nextLine());
-                        switch(input) {
-                            case 1:
-                                System.out.print("Type the plaintext you want to encrypt: ");
-                                text = in.nextLine();
-                                System.out.println("Type the 25 unique characters without J:");
-                                for (int i=0; i<5; i++) keys.add(in.nextLine());
-                                break;
-                            case 2:
-                                System.out.print("Type the file path you want to encrypt: ");
-                                text = readBytes(in.nextLine());
-                                System.out.println("Type the 25 unique characters without J:");
-                                for (int i=1; i<5; i++) keys.add(in.nextLine());
-                                break;
-                        }
-                        play = new PlayfairCipher(text, keys);
-                        result = play.encrypt();
-                        System.out.println("\n==================== RESULT ====================");
-                        System.out.println("Your Plaintext                                  : " + text);
-                        System.out.println("Your Ciphertext in Original format              : " + divideIntoN(result, 2));
-                        System.out.println("Your Ciphertext without Whitespace              : " + clearSpace(result));
-                        System.out.println("Your Ciphertext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
-                        break;
-                    case 2:
-                        printInputOption();
-                        input = Integer.parseInt(in.nextLine());
-                        switch(input) {
-                            case 1:
-                                System.out.print("Type the plaintext you want to decrypt: ");
-                                text = in.nextLine();
-                                System.out.println("Type the 25 unique characters without J:");
-                                for (int i=0; i<5; i++) keys.add(in.nextLine());
-                                break;
-                            case 2:
-                                System.out.print("Type the file path you want to decrypt: ");
-                                text = readBytes(in.nextLine());
-                                System.out.println("Type the 25 unique characters without J:");
-                                for (int i=1; i<5; i++) keys.add(in.nextLine());
-                                break;
-                        }
-                        play = new PlayfairCipher(text, keys);
-                        result = play.decrypt();
-                        System.out.println("\n==================== RESULT ====================");
-                        System.out.println("Your Chipertext                                : " + text);
-                        System.out.println("Your Plaintext in Original format              : " + result);
-                        System.out.println("Your Plaintext without Whitespace              : " + clearSpace(result));
-                        System.out.println("Your Plaintext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
-                        break;
+                break;
+            case 2 : // Extended Vigenere Cipher
+                ExtendedVigenere extVigenere = new ExtendedVigenere(text, key);
+                if (type == 1) {
+                    result = extVigenere.encrypt();
                 }
-	}
+                else {
+                    result = extVigenere.decrypt();
+                }
+                break;
+            case 3 : // Modified Vigenere Cipher
+                ModifiedVigenere modVigenere = new ModifiedVigenere(text, key);
+                if (type == 1) {
+                    result = modVigenere.encrypt();
+                }
+                else {
+                    result = modVigenere.decrypt();
+                }
+                break;
+            case 4 : // Playfair Cipher
+                PlayfairCipher playfair = new PlayfairCipher(text, key);
+                if (type == 1) {
+                    result = playfair.encrypt();
+                }
+                else {
+                    result = playfair.decrypt();
+                }
+        }
+        if (type == 1) {
+            System.out.println("\n==================== RESULT ====================");
+            System.out.println("Your Plaintext                                  : " + text);
+            System.out.println("Your Ciphertext in Original format              : " + result);
+            System.out.println("Your Ciphertext without Whitespace              : " + clearSpace(result));
+            System.out.println("Your Ciphertext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
+        }
+        else {
+            System.out.println("\n==================== RESULT ====================");
+            System.out.println("Your Chipertext                                : " + text);
+            System.out.println("Your Plaintext in Original format              : " + result);
+            System.out.println("Your Plaintext without Whitespace              : " + clearSpace(result));
+            System.out.println("Your Plaintext with Space Every 5 Characters   : " + divideIntoN(result, 5) +"\n\n");
+        }
         System.out.print("Saving to file. Type the file path: ");
         path = in.nextLine();
         saveResult(result, path);

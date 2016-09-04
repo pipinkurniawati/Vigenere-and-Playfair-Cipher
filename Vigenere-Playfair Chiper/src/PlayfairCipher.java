@@ -6,6 +6,9 @@ import java.util.Vector;
 
 public class PlayfairCipher {
     private static final int MAX_KEY_LENGTH = 25;
+    private static final char EXCLUDE_CHAR = 'J';
+    private static final char CHANGE_CHAR = 'I';
+    private static final char EXTRA_CHAR = 'Z';
     private char[][] key;
     private String text;
     
@@ -24,6 +27,34 @@ public class PlayfairCipher {
             char[] splited = line.toUpperCase().toCharArray();
             for (int j=0; j<5; j++) {
                 key[i][j] = splited[j];
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param text
+     * @param keyInput 
+     * ctor
+     */
+    public PlayfairCipher(String text, String keyInput) {
+        this.text = new String(text.toUpperCase());
+        this.key = new char[5][5];
+        String strKey = new String(keyInput.toUpperCase());
+        boolean[] occurs = new boolean[256];
+        int j = 0;
+        for (int i = 0; i < strKey.length(); i++) {
+            char c = strKey.charAt(i);
+            if ('A' <= c && c <= 'Z' && !occurs[c] && c != EXCLUDE_CHAR) {
+                occurs[c] = true;
+                key[j/5][j % 5] = c;
+                j++;
+            }
+        }
+        for (char c = 'A'; c <= 'Z'; c++) {
+            if (c != EXCLUDE_CHAR && !occurs[c]) {
+                key[j / 5][j % 5] = c;
+                j++;
             }
         }
     }
@@ -53,16 +84,16 @@ public class PlayfairCipher {
     public String encrypt() {
         String ciphertext = new String();
         text = clearSymbols(text);
-        text = text.replaceAll("J","I");
+        text = text.replaceAll("" + EXCLUDE_CHAR, "" + CHANGE_CHAR);
         
         //replace second character with Z
         for (int i=0; i<text.length()-1; i+=2) {
           if (text.charAt(i)==text.charAt(i+1)) {
-              text = new StringBuffer(text).insert(i+1, "Z").toString();
+              text = new StringBuffer(text).insert(i+1, EXTRA_CHAR).toString();
           }
         } 
         if (text.length() % 2 != 0) {
-            text = new StringBuffer(text).insert(text.length(), "Z").toString();
+            text = new StringBuffer(text).insert(text.length(), EXTRA_CHAR).toString();
         }
         
         for (int i=0; i<text.length()-1; i+=2) {  

@@ -26,7 +26,7 @@ public class StandardVigenere {
         for (int i=0; i<plaintext.length(); i++) {
             char c = plaintext.charAt(i);
             if ((c >= 'A' && c <= 'Z')) { //encrypt the alphabet only
-                result += (char) ((c + key.charAt(j) - 2 * 'A') % 26 + 'A');
+                result += (char) (((int)c + (int)key.charAt(j) - 2 * 'A') % 26 + 'A');
                 j = (j+1) % key.length();
             } else if (c==' ') { //to sustain the original format of the text
                 result += c;
@@ -47,7 +47,7 @@ public class StandardVigenere {
         for (int i=0; i<ciphertext.length(); i++) {
             char c = ciphertext.charAt(i);
             if (c >= 'A' && c <= 'Z') { //encrypt the alphabet only
-                result += (char) ((c - key.charAt(j) + 26) % 26 + 'A');
+                result += (char) (((int)c - (int)key.charAt(j) + 26) % 26 + 'A');
                 j = (j+1) % key.length();
             } else if (c==' ') {
                 result += c;
